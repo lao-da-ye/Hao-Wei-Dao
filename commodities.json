@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "name": "Pork bun",
+    "price": 4.99,
+    "details": "Prok with cabbage and mushroom",
+    "type": "Start",
+    "imageUrl": "Image/pork bun.png"
+  },
+  {
+    "id": 2,
+    "name": "Dumplings",
+    "price": 6.99,
+    "details": "Pork and chive",
+    "type": "Start",
+    "imageUrl": "Image/dumplings.png"
+  },
+  {
+    "id": 3,
+    "name": "Egg Rows",
+    "price": 6.99,
+    "details": "Egg with oliver",
+    "type": "Start",
+    "imageUrl": "Image/egg rows.png"
+  },
+  {
+    "id": 4,
+    "name": "Shumai",
+    "price": 3.99,
+    "details": "Beef/pork with glutinous rice",
+    "type": "Start",
+    "imageUrl": "Image/shumai.png"
+  },
+  {
+    "id": 5,
+    "name": "Berbecued Pork",
+    "price": 12.99,
+    "details": "Pork with berbecued sauce",
+    "type": "Meat",
+    "imageUrl": "Image/bbq pork.png"
+  },
+  {
+    "id": 6,
+    "name": "Braised Beef",
+    "price": 14.99,
+    "details": "Beef with soy sauce",
+    "type": "Meat",
+    "imageUrl": "Image/Braised Beef.png"
+  },
+  {
+    "id": 7,
+    "name": "Stewed Lamb Chop",
+    "price": 14.99,
+    "details": "Lamb chop with cumin",
+    "type": "Meat",
+    "imageUrl": "Image/stewed lamb chop.png"
+  },
+  {
+    "id": 8,
+    "name": "Braised Sea Cucumber",
+    "price": 18.99,
+    "details": "Sea cucumber with soy sauce",
+    "type": "Meat",
+    "imageUrl": "Image/Braised Sea Cucumber.png"
+  },
+  {
+    "id": 9,
+    "name": "Steamed Sea Bass",
+    "price": 14.99,
+    "details": "Sea bass with ginger and scallion",
+    "type": "Meat",
+    "imageUrl": "Image/steamed sea bass.png"
+  },
+  {
+    "id": 10,
+    "name": "Braised Beef Noodles",
+    "price": 12.99,
+    "details": "Beef in soy sauce with noodles",
+    "type": "Staple",
+    "imageUrl": "Image/braised beef noodles.png"
+  },
+  {
+    "id": 11,
+    "name": "Wonton",
+    "price": 8.99,
+    "details": "Shrimp wonton with noodles",
+    "type": "Staple",
+    "imageUrl": "Image/wonton.png"
+  },
+  {
+    "id": 12,
+    "name": "Yangzhou Fried Rice",
+    "price": 3.99,
+    "details": "Rice with eggs, shrimp, green peas, mushrooms",
+    "type": "Staple",
+    "imageUrl": "Image/fried rice.png"
+  },
+  {
+    "id": 13,
+    "name": "Shanghai Salt Rice",
+    "price": 3.99,
+    "details": "Rice with Chinese cabbage, ham, salted pork, Chinese sausage, dried shrimp",
+    "type": "Staple",
+    "imageUrl": "Image/salt rice.png"
+  },
+  {
+    "id": 14,
+    "name": "Rice",
+    "price": 1.99,
+    "details": "Rice",
+    "type": "Staple",
+    "imageUrl": "Image/rice.png"
+  },
+  {
+    "id": 15,
+    "name": "Mochi",
+    "price": 3.99,
+    "details": "Strawberry/veanilla/matcha",
+    "type": "Dessert",
+    "imageUrl": "Image/mochi.png"
+  },
+  {
+    "id": 16,
+    "name": "Coconut Jelly",
+    "price": 3.99,
+    "details": "Coconut jelly with coconut milk",
+    "type": "Dessert",
+    "imageUrl": "Image/Coconut Jelly.png"
+  },
+  {
+    "id": 17,
+    "name": "Mango Pomelo Sago",
+    "price": 4.99,
+    "details": "Mango, tapioca pearls, coconut milk, milk and grapefruit",
+    "type": "Dessert",
+    "imageUrl": "Image/Mango Pomelo Sago.png"
+  },
+  {
+    "id": 18,
+    "name": "Osmanthus Cake",
+    "price": 3.99,
+    "details": "Glutinous rice, osmanthus",
+    "type": "Dessert",
+    "imageUrl": "Image/Osmanthus Cake.png"
+  },
+  {
+    "id": 19,
+    "name": "Ice Cream",
+    "price": 2.99,
+    "details": "Strawberry/Vanilla/Lemon/Matcha/Chocolate",
+    "type": "Dessert",
+    "imageUrl": "Image/ice cream.png"
+  },
+  {
+    "id": 20,
+    "name": "Fresh Fruits",
+    "price": 3.99,
+    "details": "Watermelon/Melon/Pineapple/Mango/Kiwi/Strawberry",
+    "type": "Dessert",
+    "imageUrl": "Image/fruits.png"
+  }
+]

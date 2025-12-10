@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order food</title>
+  <style>
+    body { margin: 0; font-family: "PingFang SC", Arial, sans-serif; background: #f8f8f8;}
+    .header {
+      background: #e86c1a;
+      color: #fff;
+      text-align: center;
+      padding: 16px 0 8px 0;
+      font-size: 1.5em;
+      font-weight: bold;
+      letter-spacing: 0.2em;
+    }
+    .main {
+      display: flex;
+      min-height: 70vh;
+      background: #f8f8f8;
+    }
+    .side-nav {
+      width: 120px;
+      background: #fff;
+      border-right: 1px solid #eee;
+      padding-top: 10px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+    .side-nav a {
+      display: block;
+      color: #333;
+      padding: 14px 10px;
+      text-decoration: none;
+      border-left: 3px solid transparent;
+      transition: background 0.1s, border-color 0.1s;
+      font-size: 1em;
+    }
+    .side-nav a.active, .side-nav a:hover {
+      background: #f4e8e1;
+      border-left: 3px solid #e86c1a;
+      color: #e86c1a;
+    }
+    .content {
+      flex: 1;
+      padding: 24px 0 100px 0;
+      overflow: auto;
+    }
+    .category-title {
+      font-weight: bold;
+      font-size: 1.1em;
+      color: #e86c1a;
+      margin: 18px 0 10px 24px;
+    }
+    .dish-list {
+      margin: 0 24px 0 24px;
+      padding: 0;
+      list-style: none;
+    }
+    .dish-item {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      padding: 10px 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    .dish-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 6px;
+      object-fit: cover;
+      margin-right: 15px;
+      background: #eee;
+    }
+    .dish-info {
+      flex: 1;
+    }
+    .dish-name {
+      font-size: 1em;
+      font-weight: bold;
+      margin-bottom: 6px;
+      color: #222;
+    }
+    .dish-desc {
+  font-size: 0.85em;
+  color: #666;
+  margin-bottom: 6px;
+  line-height: 1.3em;
+}
+    .dish-price {
+      color: #e86c1a;
+      font-size: 1em;
+      font-weight: bold;
+    }
+    .dish-ctrl {
+      display: flex;
+      align-items: center;
+      margin-left: 10px;
+    }
+    .ctrl-btn {
+      background: none;
+      border: 1px solid #e86c1a;
+      color: #e86c1a;
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      font-size: 1.2em;
+      cursor: pointer;
+      margin: 0 5px;
+      transition: background 0.1s;
+    }
+    .ctrl-btn:active {
+      background: #f7e2d1;
+    }
+    .dish-qty {
+      width: 30px;
+      text-align: center;
+      font-size: 1em;
+      color: #333;
+      border: none;
+      background: none;
+    }
+    /* 底部购物车条 */
+    .footer-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #444;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      height: 54px;
+      z-index: 100;
+    }
+    .cart-icon {
+      margin-left: 18px;
+      position: relative;
+      font-size: 1.4em;
+    }
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -12px;
+      background: #e86c1a;
+      color: #fff;
+      border-radius: 10px;
+      font-size: 0.8em;
+      padding: 1px 6px;
+      min-width: 18px;
+      text-align: center;
+    }
+    .footer-total {
+      margin-left: 18px;
+      font-size: 1.1em;
+      flex: 1;
+    }
+    .checkout-btn {
+      background: #e86c1a;
+      color: #fff;
+      border: none;
+      border-radius: 0;
+      font-size: 1.15em;
+      font-weight: bold;
+      padding: 0 38px;
+      height: 100%;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .checkout-btn:active {
+      background: #c85c10;
+    }
+    @media (max-width: 700px) {
+      .main { flex-direction: column; }
+      .side-nav { width: 100%; display: flex; border-right: none; border-bottom: 1px solid #eee; height: auto;}
+      .side-nav a { flex: 1; text-align: center; border-left: none; border-bottom: 3px solid transparent;}
+      .side-nav a.active, .side-nav a:hover { border-bottom: 3px solid #e86c1a; border-left: none; }
+      .content { padding: 12px 0 100px 0; }
+      .category-title { margin: 16px 0 10px 10px; }
+      .dish-list { margin: 0 10px; }
+    }
+  </style>
+</head> 
+<body>
+  <div class="header">Hao Wei Dao</div>
+  <div class="main">
+    <!-- 侧边导航 -->
+    <nav class="side-nav" id="sideNav">
+      <a href="#cat1" class="active">Start</a>
+      <a href="#cat2">Meat</a>
+      <a href="#cat3">Staple</a>
+      <a href="#cat4">Dessert</a>
+    </nav>
+    <!-- 菜品内容区 -->
+    <div class="content">
+      <div id="cat1">
+        <div class="category-title">Start</div>
+        <ul class="dish-list">
+          <li class="dish-item">
+            <img class="dish-img" src="Image/pork bun.png" alt="">
+            <div class="dish-info">
+              <div class="dish-name">Pork bun</div>
+              <div class="dish-price">$4.99</div>
+              <div class="dish-desc">Prok with cabbage and mushroom</div>
+            </div>
+            <div class="dish-ctrl">
+              <button class="ctrl-btn" onclick="changeQty(0,-1)">－</button>
+              <span class="dish-qty" id="qty-0">0</span>
+              <button class="ctrl-btn" onclick="changeQty(0,1)">＋</button>
+            </div>
+          </li>
+          </ul>
+          <ul class="dish-list">
+            <li class="dish-item">
+              <img class="dish-img" src="Image/dumplings.png" alt="">
+              <div class="dish-info">
+                <div class="dish-name">Dumplings</div>
+                <div class="dish-price">$6.99</div>
+                <div class="dish-desc">Pork and chive</div>
+              </div>
+              <div class="dish-ctrl">
+                <button class="ctrl-btn" onclick="changeQty(1,-1)">－</button>
+                <span class="dish-qty" id="qty-1">0</span>
+                <button class="ctrl-btn" onclick="changeQty(1,1)">＋</button>
+              </div>
+            </li>
+          </ul>
+        <ul class="dish-list">
+          <li class="dish-item">
+            <img class="dish-img" src="Image/egg rows.png" alt="">
+            <div class="dish-info">
+              <div class="dish-name">Egg Rows</div>
+              <div class="dish-price">$6.99</div>
+              <div class="dish-desc">Egg with oliver</div>
+            </div>
+            <div class="dish-ctrl">
+              <button class="ctrl-btn" onclick="changeQty(2,-1)">－</button>
+              <span class="dish-qty" id="qty-2">0</span>
+              <button class="ctrl-btn" onclick="changeQty(2,1)">＋</button>
+            </div>
+          </li>
+        </ul>
+        <ul class="dish-list">
+          <li class="dish-item">
+            <img class="dish-img" src="Image/shumai.png" alt="">
+            <div class="dish-info">
+              <div class="dish-name">Shumai</div>
+              <div class="dish-price">$3.99</div>
+              <div class="dish-desc">Beef/pork with glutinous rice</div>
+            </div>
+            <div class="dish-ctrl">
+              <button class="ctrl-btn" onclick="changeQty(3,-1)">－</button>
+              <span class="dish-qty" id="qty-3">0</span>
+              <button class="ctrl-btn" onclick="changeQty(3,1)">＋</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div id="cat2">
+        <div class="category-title">Meat</div>
+        <ul class="dish-list">
+          <li class="dish-item">
+            <img class="dish-img" src="Image/bbq pork.png" alt="">
+            <div class="dish-info">
+              <div class="dish-name">Berbecued Pork</div>
+              <div class="dish-price">$12.99</div>
+              <div class="dish-desc">Pork with berbecued sauce</div>
+            </div>
+            <div class="dish-ctrl">
+              <button class="ctrl-btn" onclick="changeQty(4,-1)">－</button>
+              <span class="dish-qty" id="qty-4">0</span>
+              <button class="ctrl-btn" onclick="changeQty(4,1)">＋</button>
+            </div>
+          </li>
+        </ul>
+        <ul class="dish-list">
+          <li class="dish-item">
+            <img class="dish-img" src="Image/braised beef.png" alt="">
+            <div class="dish-info">
+              <div class="dish-name">Braised Beef</div>
+              <div class="dish-price">$14.99</div>
+              <div class="dish-desc">Beef with soy sauce</div>
+            </div>
+            <div class="dish-ctrl">
+              <button class="ctrl-btn" onclick="changeQty(5,-1)">－</button>
+              <span class="dish-qty" id="qty-5">0</span>
+              <button class="ctrl-btn" onclick="changeQty(5,1)">＋</button>
+            </div>
+          </li>
+        </ul>
+        <ul class="dish-list">
+          <li class="dish-item">
+            <img class="dish-img" src="Image/Stewed Lamb Chop.png" alt="">
+            <div class="dish-info">
+              <div class="dish-name">Stewed Lamb Chop</div>
+              <div class="dish-price">$14.99</div>
+              <div class="dish-desc">Lamb chop with cumin</div>
+            </div>
+            <div class="dish-ctrl">
+              <button class="ctrl-btn" onclick="changeQty(6,-1)">－</button>
+              <span class="dish-qty" id="qty-6">0</span>
+              <button class="ctrl-btn" onclick="changeQty(6,1)">＋</button>
+            </div>
+          </li>
+        </ul>
+        <ul class="dish-list">
+          <li class="dish-item">
+            <img class="dish-img" src="Image/Braised Sea Cucumber.png" alt="">
+            <div class="dish-info">
+              <div class="dish-name">Braised Sea Cucumber</div>
+              <div class="dish-price">$18.99</div>
+              <div class="dish-desc">Sea cucumber with soy sauce</div>
+            </div>
+            <div class="dish-ctrl">
+              <button class="ctrl-btn" onclick="changeQty(7,-1)">－</button>
+              <span class="dish-qty" id="qty-7">0</span>
+              <button class="ctrl-btn" onclick="changeQty(7,1)">＋</button>
+            </div>
+          </li>
+        </ul>
+        <ul class="dish-list">
+          <li class="dish-item">
+            <img class="dish-img" src="Image/Steamed Sea Bass.png" alt="">
+            <div class="dish-info">
+              <div class="dish-name">Steamed Sea Bass</div>
+              <div class="dish-price">$14.99</div>
+              <div class="dish-desc">Sea bass with ginger and scallion</div>
+            </div>
+            <div class="dish-ctrl">
+              <button class="ctrl-btn" onclick="changeQty(8,-1)">－</button>
+              <span class="dish-qty" id="qty-8">0</span>
+              <button class="ctrl-btn" onclick="changeQty(8,1)">＋</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div id="cat3">
+        <div class="category-title">Staple</div>
+        <ul class="dish-list">
+          <li class="dish-item">
+            <img class="dish-img" src="Image/braised beef noodles.png" alt="">
+            <div class="dish-info">
+              <div class="dish-name">Braised Beef Noodles</div>
+              <div class="dish-price">$12.99</div>
+              <div class="dish-desc">Beef in soy sauce with noodles</div>
+            </div>
+            <div class="dish-ctrl">
+              <button class="ctrl-btn" onclick="changeQty(9,-1)">－</button>
+              <span class="dish-qty" id="qty-9">0</span>
+              <button class="ctrl-btn" onclick="changeQty(9,1)">＋</button>
+            </div>
+          </li>
+        </ul>
+        <ul class="dish-list">
+          <li class="dish-item">
+            <img class="dish-img" src="Image/wonton.png" alt="">
+            <div class="dish-info">
+              <div class="dish-name">Wonton</div>
+              <div class="dish-price">$8.99</div>
+              <div class="dish-desc">Shrimp wonton with noodles</div>
+            </div>
+            <div class="dish-ctrl">
+              <button class="ctrl-btn" onclick="changeQty(10,-1)">－</button>
+              <span class="dish-qty" id="qty-10">0</span>
+              <button class="ctrl-btn" onclick="changeQty(10,1)">＋</button>
+            </div>
+          </li>
+        </ul>
+        <ul class="dish-list">
+          <li class="dish-item">
+            <img class="dish-img" src="Image/fried rice.png" alt="">
+            <div class="dish-info">
+              <div class="dish-name">Yangzhou Fried Rice</div>
+              <div class="dish-price">$3.99</div>
+              <div class="dish-desc">Rice with eggs, shrimp, green peas, mushrooms</div>
+            </div>
+            <div class="dish-ctrl">
+              <button class="ctrl-btn" onclick="changeQty(11,-1)">－</button>
+              <span class="dish-qty" id="qty-11">0</span>
+              <button class="ctrl-btn" onclick="changeQty(11,1)">＋</button>
+            </div>
+          </li>
+        </ul>
+        <ul class="dish-list">
+          <li class="dish-item">
+            <img class="dish-img" src="Image/salt rice.png" alt="">
+            <div class="dish-info">
+              <div class="dish-name">Shanghai Salt Rice</div>
+              <div class="dish-price">$3.99</div>
+              <div class="dish-desc">Rice with Chinese cabbage, ham, salted pork, Chinese sausage, dried shrimp</div>
+            </div>
+            <div class="dish-ctrl">
+              <button class="ctrl-btn" onclick="changeQty(12,-1)">－</button>
+              <span class="dish-qty" id="qty-12">0</span>
+              <button class="ctrl-btn" onclick="changeQty(12,1)">＋</button>
+            </div>
+          </li>
+        </ul>
+        <ul class="dish-list">
+          <li class="dish-item">
+            <img class="dish-img" src="Image/rice.png" alt="">
+            <div class="dish-info">
+              <div class="dish-name">Rice</div>
+              <div class="dish-price">$1.99</div>
+              <div class="dish-desc">Rice</div>
+            </div>
+            <div class="dish-ctrl">
+              <button class="ctrl-btn" onclick="changeQty(13,-1)">－</button>
+              <span class="dish-qty" id="qty-13">0</span>
+              <button class="ctrl-btn" onclick="changeQty(13,1)">＋</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div id="cat4">
+        <div class="category-title">Dessert</div>
+        <ul class="dish-list">
+          <li class="dish-item">
+            <img class="dish-img" src="Image/mochi.png" alt="">
+            <div class="dish-info">
+              <div class="dish-name">Mochi</div>
+              <div class="dish-price">$3.99</div>
+              <div class="dish-desc">Strawberry/veanilla/matcha</div>
+            </div>
+            <div class="dish-ctrl">
+              <button class="ctrl-btn" onclick="changeQty(14,-1)">－</button>
+              <span class="dish-qty" id="qty-14">0</span>
+              <button class="ctrl-btn" onclick="changeQty(14,1)">＋</button>
+            </div>
+          </li>
+        </ul>
+        <ul class="dish-list">
+          <li class="dish-item">
+            <img class="dish-img" src="Image/coconut jelly.png" alt="">
+            <div class="dish-info">
+              <div class="dish-name">Coconut Jelly</div>
+              <div class="dish-price">$3.99</div>
+              <div class="dish-desc">Coconut jelly with coconut milk</div>
+            </div>
+            <div class="dish-ctrl">
+              <button class="ctrl-btn" onclick="changeQty(15,-1)">－</button>
+              <span class="dish-qty" id="qty-15">0</span>
+              <button class="ctrl-btn" onclick="changeQty(15,1)">＋</button>
+            </div>
+          </li>
+        </ul>
+        <ul class="dish-list">
+          <li class="dish-item">
+            <img class="dish-img" src="Image/Mango Pomelo Sago.png" alt="">
+            <div class="dish-info">
+              <div class="dish-name">Mango Pomelo Sago</div>
+              <div class="dish-price">$4.99</div>
+              <div class="dish-desc">Mango, tapioca pearls, coconut milk, milk and grapefruit</div>
+            </div>
+            <div class="dish-ctrl">
+              <button class="ctrl-btn" onclick="changeQty(16,-1)">－</button>
+              <span class="dish-qty" id="qty-16">0</span>
+              <button class="ctrl-btn" onclick="changeQty(16,1)">＋</button>
+            </div>
+          </li>
+        </ul>
+        <ul class="dish-list">
+          <li class="dish-item">
+            <img class="dish-img" src="Image/Osmanthus Cake.png" alt="">
+            <div class="dish-info">
+              <div class="dish-name">Osmanthus Cake</div>
+              <div class="dish-price">$3.99</div>
+              <div class="dish-desc">Glutinous rice, osmanthus</div>
+            </div>
+            <div class="dish-ctrl">
+              <button class="ctrl-btn" onclick="changeQty(17,-1)">－</button>
+              <span class="dish-qty" id="qty-17">0</span>
+              <button class="ctrl-btn" onclick="changeQty(17,1)">＋</button>
+            </div>
+          </li>
+        </ul>
+        <ul class="dish-list">
+          <li class="dish-item">
+            <img class="dish-img" src="Image/ice cream.png" alt="">
+            <div class="dish-info">
+              <div class="dish-name">Ice Cream</div>
+              <div class="dish-price">$2.99</div>
+              <div class="dish-desc">Strawberry/Vanilla/Lemon/Matcha/Chocolate</div>
+            </div>
+            <div class="dish-ctrl">
+              <button class="ctrl-btn" onclick="changeQty(18,-1)">－</button>
+              <span class="dish-qty" id="qty-18">0</span>
+              <button class="ctrl-btn" onclick="changeQty(18,1)">＋</button>
+            </div>
+          </li>
+        </ul>
+        <ul class="dish-list">
+          <li class="dish-item">
+            <img class="dish-img" src="Image/fruits.png" alt="">
+            <div class="dish-info">
+              <div class="dish-name">Fresh Fruits</div>
+              <div class="dish-price">$3.99</div>
+              <div class="dish-desc">Watermelon/Melon/Pineapple/Mango/Kiwi/Strawberry</div>
+            </div>
+            <div class="dish-ctrl">
+              <button class="ctrl-btn" onclick="changeQty(19,-1)">－</button>
+              <span class="dish-qty" id="qty-19">0</span>
+              <button class="ctrl-btn" onclick="changeQty(19,1)">＋</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- 底部购物车栏 -->
+  <div class="footer-bar">
+    <span class="cart-icon">
+      🛒
+      <span class="cart-badge" id="cart-badge">0</span>
+    </span>
+    <span class="footer-total" id="footer-total">$0</span>
+    <button class="checkout-btn" onclick="goToCart()">Finish</button>
+  </div>
+  <script>
+    // 菜品价格与初始数量
+    let prices = [4.99, 6.99, 6.99, 3.99, 12.99, 14.99, 14.99, 18.99, 14.99, 12.99, 8.99, 3.99, 3.99, 1.99, 3.99, 3.99, 4.99, 3.99, 2.99, 3.99];
+    let qtyArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+    // 更新所有数量和总价
+    function updateAll() {
+      let total = 0, count = 0;
+      for(let i=0;i<qtyArr.length;i++){
+        document.getElementById('qty-'+i).innerText = qtyArr[i];
+        total += qtyArr[i]*prices[i];
+        count += qtyArr[i];
+      }
+      document.getElementById('footer-total').innerText = '$'+total;
+      document.getElementById('cart-badge').innerText = count;
+    }
+    function changeQty(idx, delta) {
+      qtyArr[idx] += delta;
+      if(qtyArr[idx]<0) qtyArr[idx]=0;
+      updateAll();
+    }
+    function goToCart() {
+  const cartItems = [];
+  for (let i = 0; i < qtyArr.length; i++) {
+    if (qtyArr[i] > 0) {
+      cartItems.push({
+        name: document.querySelector(`#qty-${i}`).closest('.dish-item').querySelector('.dish-name').innerText,
+        price: prices[i],
+        qty: qtyArr[i]
+      });
+    }
+  }
+  localStorage.setItem('cart', JSON.stringify(cartItems));
+  window.location.href = 'cart.html';
+
+document.addEventListener('DOMContentLoaded', () => {
+  // 请求后端获取所有菜品
+  fetch('http://localhost:3000/commodities')
+    .then(res => res.json())
+    .then(data => {
+      if (!data.success) return;
+      const commodities = data.commodities;
+
+      commodities.forEach((dish, idx) => {
+        // 更新菜名
+        const nameEl = document.querySelector(`#qty-${idx}`)?.closest('.dish-item')?.querySelector('.dish-name');
+        if (nameEl) nameEl.innerText = dish.name;
+
+        // 更新价格
+        const priceEl = document.querySelector(`#qty-${idx}`)?.closest('.dish-item')?.querySelector('.dish-price');
+        if (priceEl) priceEl.innerText = `$${dish.price}`;
+
+        // 更新图片
+        const imgEl = document.querySelector(`#qty-${idx}`)?.closest('.dish-item')?.querySelector('.dish-img');
+        if (imgEl) imgEl.src = dish.imageUrl;
+      });
+    });
+});
+
+    }
+    // 初始化侧边栏高亮
+    const sideNav = document.getElementById('sideNav');
+    const sections = document.querySelectorAll('.content > div');
+    window.addEventListener('scroll', function() {
+      let activeSection = null;
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top >= 0 && rect.top < window.innerHeight) {
+          activeSection = section.id;
+        }
+      });
+      if (activeSection) {
+        sideNav.querySelectorAll('a').forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href').substring(1) === activeSection) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+
+    // 页面加载时高亮第一个分类
+    if (sections.length > 0) {
+      sections[0].scrollIntoView();
+      sideNav.querySelector('a').classList.add('active');
+      sideNav.querySelector('a').scrollIntoView({block: 'start', behavior: 'smooth'});
+  }
+    // 点击侧边栏跳转到对应内容
+    sideNav.addEventListener('click', function(e) {
+      if (e.target.tagName === 'A') {
+        e.preventDefault();
+        const targetId = e.target.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        targetSection.scrollIntoView({behavior: 'smooth'});
+      }
+    });
+
+    // 侧边栏高亮
+    const navLinks = document.querySelectorAll('.side-nav a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        navLinks.forEach(l=>l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+    updateAll();
+    // 初始化时读取购物车数据
+// orderfood.html 优化初始化函数
+function initCartData() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  // 重置所有数量为0（避免残留数据）
+  qtyArr = qtyArr.map(() => 0);
+  // 根据购物车数据恢复数量
+  cart.forEach(item => {
+    const dishItems = document.querySelectorAll('.dish-item');
+    dishItems.forEach((dish, idx) => {
+      const name = dish.querySelector('.dish-name').innerText;
+      if (name === item.name) {
+        qtyArr[idx] = item.qty;
+      }
+    });
+  });
+  updateAll();
+}
+
+// 页面加载时执行
+document.addEventListener('DOMContentLoaded', initCartData);
+  </script>
+</body>
+</html>

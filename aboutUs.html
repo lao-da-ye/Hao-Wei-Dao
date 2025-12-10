@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About Us</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #de5757;
+            margin: 0;
+        }
+        .navbar {
+            background: #eee;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+        }
+        .navbar .url {
+            background: #fff;
+            border: 1px solid #bbb;
+            padding: 6px 18px;
+            border-radius: 5px;
+            font-size: 15px;
+            margin-left: 18px;
+        }
+        .back-btn {
+            background: #de5757;
+            border: none;
+            color: #333;
+            padding: 7px 22px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            padding: 38px 30px 38px 30px;
+        }
+      
+        /* 响应式 */
+        @media (max-width: 900px) {
+            .menu-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px 3vw;
+            }
+            .menu-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <button class="back-btn" onclick="window.location.href='index.html'">← Back</button>
+    </div>
+    <div class="container">
+        <h1>About Us</h1>
+        <p>Welcome to our restaurant! We are dedicated to providing you with the best dining experience possible. Our team is passionate about food and committed to using only the freshest ingredients.</p>
+        <p>Whether you're here for a quick bite or a leisurely meal, we strive to make every visit memorable. Thank you for choosing us!</p>
+        <img src="Image/chefs.png" alt="Chefs Image" class="restaurant-img">
+        <button class="menu-btn" onclick="window.location.href='menu.html'">View Menu</button>
+    </div>
+</body>
+</html>

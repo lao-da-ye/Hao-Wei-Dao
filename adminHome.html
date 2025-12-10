@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f7f7;
+        }
+        .container {
+            width: 700px;
+            margin: 50px auto;
+            display: flex;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            min-height: 400px;
+        }
+        .sidebar {
+            width: 180px;
+            background: #ececec;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding-top: 40px;
+        }
+        .sidebar button {
+            width: 160px;
+            margin: 10px auto;
+            padding: 12px;
+            border: none;
+            background: #1976d2;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .sidebar button:hover {
+            background: #1565c0;
+        }
+        .sidebar .bottom-btn {
+            margin-bottom: 20px;
+        }
+        .main-content {
+            flex: 1;
+            padding: 40px 40px;
+        }
+        .main-content h2 {
+            text-align: left;
+            font-weight: normal;
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div>
+                <button onclick="location.href='pendingOrder.html'">pending order</button>
+                <button onclick="location.href='commodityManage.html'">commodity management</button>
+            </div>
+            <div>
+                <button class="bottom-btn" onclick="location.href='adminLogIn.html'">log out</button>
+            </div>
+        </div>
+        <div class="main-content">
+            <h2>Order trends</h2>
+            <canvas id="orderChart" height="300"></canvas>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('orderChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['21/9/2025', '22/9/2025', '23/9/2025'],
+                datasets: [{
+                    label: 'Orders',
+                    data: [5, 3, 6],
+                    borderColor: '#1976d2',
+                    backgroundColor: 'rgba(25, 118, 210, 0.2)',
+                    pointBackgroundColor: '#1976d2',
+                    pointBorderColor: '#1976d2',
+                    fill: false,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f7f7;
+        }
+        .container {
+            width: 400px;
+            margin: 100px auto;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 40px 30px;
+            border-radius: 8px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: normal; 
+        }
+        input[type="text"], input[type="password"] {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #bbb;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #1976d2;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #1565c0;
+        }
+        .error {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Admin log in</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="user name" required>
+            <input type="password" id="password" placeholder="password" required>
+            <button type="submit">Continue</button>
+        </form>
+        <div id="errorMsg" class="error"></div>
+    </div>
+
+    <script>
+        // 获取表单和错误提示
+        const form = document.getElementById("loginForm");
+        const errorMsg = document.getElementById("errorMsg");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault(); // 阻止表单默认提交
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            if (username === "admin" && password === "123456") {
+                // 登录成功，跳转页面
+                window.location.href = "adminHome.html";
+            } else {
+                // 登录失败，显示错误信息
+                errorMsg.textContent = "Incorrect account or password, please try again.";
+            }
+        });
+    </script>
+</body>
+</html>

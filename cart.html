@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>shopping cart</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f8f8f8; margin: 0; }
+    header { background: #eee; padding: 20px; text-align: center; }
+    main { max-width: 700px; margin: 30px auto; background: #fff; border-radius: 10px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.09);}
+    h1 { text-align: center; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px;}
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: center;}
+    .btn { background: #d1bfa7; color: #222; border: none; border-radius: 6px; padding: 6px 18px; cursor: pointer; }
+    .btn:active { background: #b8a47a; }
+    .hidden { display: none; }
+    .center { text-align: center; }
+
+    .navbar {
+            background: #eee;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+        }
+        .navbar .url {
+            background: #fff;
+            border: 1px solid #bbb;
+            padding: 6px 18px;
+            border-radius: 5px;
+            font-size: 15px;
+            margin-left: 18px;
+        }
+    @media (max-width: 800px) {
+      main { padding: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>shopping cart</h2>
+  </header>
+  <div class="navbar">
+    <button class="back-btn" onclick="window.location.href='orderfood.html'">← Back</button>
+</div>
+  <main>
+    <!-- 购物车页面 -->
+    <section id="cart-section">
+      <h1>Orders</h1>
+      <div id="cart-list"></div>
+      <div class="center">
+        <button class="btn" onclick="showOrder()">Settlement</button>
+      </div>
+    </section>
+
+    <!-- 结算页面 -->
+    <section id="order-section" class="hidden">
+      <h1>Fill in order information</h1>
+      <form id="order-form" onsubmit="submitOrder(event)">
+        <label>Name：<input required name="name"></label><br><br>
+        <label>Phone number：<input required name="phone"></label><br><br>
+        <label>Email：<input required name="email"></label><br><br>
+        <label>Address：<input required name="address" style="width:220px;"></label><br><br>
+        <label>Comment：<textarea name="comment" rows="3" style="width:220px;"></textarea></label><br><br>
+        <label>Payment Method：
+          <select name="payment" required>
+            <option value="">-- Please choose --</option>
+            <option value="wechat">WeChat Pay</option>
+            <option value="alipay">Alipay</option>
+            <option value="card">Credit Card</option>
+            <option value="cash">Cash on delivery</option>
+          </select>
+        </label>
+        <br><br>        
+        <div class="center">
+          <button class="btn" type="submit">Submit your order</button>
+          <button class="btn" type="button" onclick="showCart()">Back to shopping cart</button>
+        </div>
+      </form>      
+    </section>
+
+    <!-- 下单成功页面 -->
+    <section id="success-section" class="hidden center">
+      <h1>Success！</h1>
+      <p>Thank you for your order, We will deliver it to you as soon as possible！</p>
+      <button class="btn" onclick="restart(), window.location.href='orderfood.html'">I want add more</button>
+    </section>
+  </main>
+  <script>
+    // cart.html 修改以下两个函数
+function changeQty(idx, delta) {
+  cart[idx].qty += delta;
+  if (cart[idx].qty <= 0) cart.splice(idx, 1);
+  localStorage.setItem('cart', JSON.stringify(cart)); // 新增保存操作
+  renderCart();
+}
+
+function removeItem(idx) {
+  cart.splice(idx, 1);
+  localStorage.setItem('cart', JSON.stringify(cart)); // 新增保存操作
+  renderCart();
+}
+// 从本地存储读取购物车
+let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+    // 渲染购物车
+    function renderCart() {
+      const cartList = document.getElementById('cart-list');
+      if (cart.length === 0) {
+        cartList.innerHTML = '<p class="center">your shopping cart is empty</p>';
+        return;
+      }
+      let html = `<table><tr><th>name</th><th>price</th><th>number</th><th>subtotal price</th><th>operate</th></tr>`;
+      cart.forEach((item, idx) => {
+        html += `<tr>
+          <td>${item.name}</td>
+          <td>$${item.price}</td>
+          <td>
+            <button class="btn" onclick="changeQty(${idx},-1)">-</button>
+            ${item.qty}
+            <button class="btn" onclick="changeQty(${idx},1)">+</button>
+          </td>
+          <td>$${item.price * item.qty}</td>
+          <td>
+            <button class="btn" onclick="removeItem(${idx})">Delete</button>
+          </td>
+        </tr>`;
+      });
+      html += `<tr><td colspan="5">Total：$${cart.reduce((sum, i) => sum + i.price * i.qty, 0)}</td></tr></table>`;
+      cartList.innerHTML = html;
+    }
+    // 显示购物车
+    function showCart() {
+      document.getElementById('cart-section').classList.remove('hidden');
+      document.getElementById('order-section').classList.add('hidden');
+      document.getElementById('success-section').classList.add('hidden');
+      renderCart();
+    }
+    // 显示结算页面
+    function showOrder() {
+      if (cart.length === 0) {
+        alert("Your shopping cart is empty！");
+        return;
+      }
+      document.getElementById('cart-section').classList.add('hidden');
+      document.getElementById('order-section').classList.remove('hidden');
+      document.getElementById('success-section').classList.add('hidden');
+    }
+    // 提交订单
+   // cart.html 修改提交订单函数
+   function submitOrder(e) {
+  e.preventDefault();
+  // 构建表单和购物车数据
+  const form = e.target;
+  const order = {
+    name: form.name.value,
+    phone: form.phone.value,
+    email: form.email.value,
+    address: form.address.value,
+    comment: form.comment.value,
+    cart: cart   // 购物车数组
+  };
+
+  // 向后端 Node.js 提交订单
+  fetch('http://localhost:3000/submitOrder', { 
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(order)
+})
+    .then(resp => resp.json())
+    .then(data => {
+      if (data.success) {
+        localStorage.removeItem('cart'); // 清空本地购物车
+        cart = [];
+        // 显示下单成功页面
+        document.getElementById('cart-section').classList.add('hidden');
+        document.getElementById('order-section').classList.add('hidden');
+        document.getElementById('success-section').classList.remove('hidden');
+      } else {
+        alert(data.message || 'Order failed, please try again!');
+      }
+    })
+    .catch(err => {
+      alert('Network error, please try again later!');
+      console.error(err);
+    });
+}
+    // 重启购物车
+    function restart() {
+      // 返回购物车
+      cart = [];
+      showCart();
+    }
+    // 初始化
+    showCart();
+  </script>
+</body>
+</html>

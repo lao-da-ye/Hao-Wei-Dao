@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Commodity Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+    }
+    .container {
+      width: 1000px;
+      margin: 50px auto;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      min-height: 400px;
+      padding: 40px 30px 30px 30px;
+      position: relative;
+    }
+    .back-btn {
+      padding: 8px 20px;
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 18px;
+    }
+    .back-btn:hover {
+      background: #1565c0;
+    }
+    h2 {
+      font-weight: normal;
+      margin-bottom: 18px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      border: 1px solid #bbb;
+      padding: 9px;
+      text-align: center;
+    }
+    th {
+      background: #ececec;
+      font-weight: 400;
+    }
+    .img-icon {
+      width: 38px;
+      height: 38px;
+      object-fit: cover;
+      border-radius: 7px;
+      background: #eee;
+      display: inline-block;
+    }
+    .modify-btn {
+      padding: 3px 13px;
+      background: #e86c1a;
+      border: none;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .modify-btn:hover {
+      background: #c85c10;
+    }
+    .plus-btn {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 16px;
+      padding: 11px 21px;
+      font-size: 21px;
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(25, 118, 210, 0.1);
+      transition: background 0.12s;
+    }
+    .plus-btn:hover {
+      background: #1565c0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="back-btn" onclick="window.location.href='adminHome.html'">&larr; Back</button>
+    <h2>Commodity Management</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>name</th>
+          <th>image</th>
+          <th>price</th>
+          <th>details</th>
+          <th>type</th>
+          <th>modify</th>
+        </tr>
+      </thead>
+      <tbody id="commodity-body">
+        <!-- JS will render rows here -->
+      </tbody>
+    </table>
+    <button class="plus-btn" onclick="window.location.href='addCommodity.html'">＋</button>
+  </div>
+  <script>
+    async function fetchCommodities() {
+      try {
+        const res = await fetch('http://localhost:3000/commodities');
+        const data = await res.json();
+        if (data.success) {
+          renderCommodities(data.commodities);
+        } else {
+          alert('Failed to load products');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Unable to connect to the server');
+      }
+    }
+  
+    function renderCommodities(commodities) {
+      const tbody = document.getElementById('commodity-body');
+      tbody.innerHTML = '';
+      commodities.forEach((c) => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${c.name}</td>
+            <td><img class="img-icon" src="${c.imageUrl}" alt=""></td>
+            <td>$${c.price.toFixed(2)}</td>
+            <td>${c.details || '-'}</td>
+            <td>${c.type}</td>
+            <td>
+              <button class="modify-btn" onclick="window.location.href='addCommodity.html?id=${c.id}'">✎</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+  
+    fetchCommodities();
+  </script>
+</body>
+</html>

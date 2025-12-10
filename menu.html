@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #de5757;
+            margin: 0;
+        }
+        .navbar {
+            background: #eee;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+        }
+        .navbar .url {
+            background: #fff;
+            border: 1px solid #bbb;
+            padding: 6px 18px;
+            border-radius: 5px;
+            font-size: 15px;
+            margin-left: 18px;
+        }
+        .back-btn {
+            background: #de5757;
+            border: none;
+            color: #333;
+            padding: 7px 22px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            padding: 38px 30px 38px 30px;
+        }
+        .main .menu-img {
+            display: block;
+            margin: 40px auto 20px auto;
+            width: 500px;
+            border: 1px solid #ccc;
+            background: #fff;
+            padding: 10px;
+        }
+        /* 响应式 */
+        @media (max-width: 900px) {
+            .menu-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px 3vw;
+            }
+            .menu-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <button class="back-btn" onclick="window.location.href='index.html'">← Back</button>
+    </div>
+    <div class="container">
+        <div class="menu-grid">
+            <div class="main">
+                <img src="Image/Hao Wei Dao.png" alt="restaurant" class="menu-img" style="width: 500px;" />
+        </div>
+    </div>
+</body>
+</html>

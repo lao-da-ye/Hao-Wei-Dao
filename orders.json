@@ -1,0 +1,162 @@
+[
+  {
+    "name": "Angel",
+    "phone": "123456789",
+    "email": "angel@gmail.com",
+    "address": "prime internation school",
+    "comment": "Bring some spice",
+    "cart": [
+      {
+        "name": "Egg Rows",
+        "price": 6.99,
+        "qty": 2
+      },
+      {
+        "name": "Osmanthus Cake",
+        "price": 3.99,
+        "qty": 2
+      }
+    ],
+    "total": 21.96,
+    "status": "completed",
+    "time": "2025-09-24T12:40:31.921Z"
+  },
+  {
+    "name": "Lucas",
+    "phone": "987654321",
+    "email": "Angel123@gmail.com",
+    "address": "Cascais",
+    "comment": "soy sauce",
+    "cart": [
+      {
+        "name": "Dumplings",
+        "price": 6.99,
+        "qty": 1
+      }
+    ],
+    "total": 6.99,
+    "status": "pending",
+    "time": "2025-10-03T12:56:12.564Z"
+  },
+  {
+    "name": "Leo",
+    "phone": "8391249",
+    "email": "Leo333@gmail.com",
+    "address": "Lisbon",
+    "comment": "Spice",
+    "cart": [
+      {
+        "name": "Stewed Lamb Chop",
+        "price": 14.99,
+        "qty": 2
+      },
+      {
+        "name": "Braised Beef Noodles",
+        "price": 12.99,
+        "qty": 2
+      },
+      {
+        "name": "Yangzhou Fried Rice",
+        "price": 3.99,
+        "qty": 1
+      }
+    ],
+    "total": 59.95,
+    "status": "pending",
+    "time": "2025-10-12T14:54:53.789Z"
+  },
+  {
+    "name": "Davids",
+    "phone": "13789832",
+    "email": "Davids567@gmail.com",
+    "address": "Sintra",
+    "comment": "Give two chop sticks",
+    "cart": [
+      {
+        "name": "Dumplings",
+        "price": 6.99,
+        "qty": 1
+      },
+      {
+        "name": "Egg Rows",
+        "price": 6.99,
+        "qty": 1
+      },
+      {
+        "name": "Braised Beef",
+        "price": 14.99,
+        "qty": 1
+      },
+      {
+        "name": "Braised Sea Cucumber",
+        "price": 18.99,
+        "qty": 1
+      },
+      {
+        "name": "Shanghai Salt Rice",
+        "price": 3.99,
+        "qty": 1
+      },
+      {
+        "name": "Mochi",
+        "price": 3.99,
+        "qty": 1
+      },
+      {
+        "name": "Mango Pomelo Sago",
+        "price": 4.99,
+        "qty": 2
+      }
+    ],
+    "total": 65.92,
+    "status": "pending",
+    "time": "2025-10-12T14:57:03.974Z"
+  },
+  {
+    "name": "Runtong",
+    "phone": "1888888888",
+    "email": "liruntong16@gmail.com",
+    "address": "lisboa",
+    "comment": "more spicy",
+    "cart": [
+      {
+        "name": "Pork bun",
+        "price": 4.99,
+        "qty": 1
+      },
+      {
+        "name": "Shumai",
+        "price": 3.99,
+        "qty": 1
+      },
+      {
+        "name": "Stewed Lamb Chop",
+        "price": 14.99,
+        "qty": 1
+      },
+      {
+        "name": "Wonton",
+        "price": 8.99,
+        "qty": 1
+      },
+      {
+        "name": "Shanghai Salt Rice",
+        "price": 3.99,
+        "qty": 1
+      },
+      {
+        "name": "Coconut Jelly",
+        "price": 3.99,
+        "qty": 2
+      },
+      {
+        "name": "Mango Pomelo Sago",
+        "price": 4.99,
+        "qty": 1
+      }
+    ],
+    "total": 49.92000000000001,
+    "status": "pending",
+    "time": "2025-10-16T09:48:40.735Z"
+  }
+]
